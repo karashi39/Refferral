@@ -1,0 +1,22 @@
+div.user_area{
+  margin: 5px auto;
+}
+
+div.user_card{
+  background-color: #98fb98;
+  margin: 5px;
+  font-size: x-small;
+}
+
+div.user_card_right{
+  margin: 5px;
+}
+div.user_card_left{
+  margin: 5px;
+}
+div.user_card_bottom{
+  margin: 5px;
+}
+img{
+  width: 160px;
+}
