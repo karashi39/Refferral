@@ -46,6 +46,8 @@ def delete_users():
     while True:
         try:
             user_id = raw_input()
+            user_id = user_id.replace('https://qiita.com/', '')
+            user_id = user_id.replace('@', '')
             db.logical_delete_m_qiita_users(user_id)
         except KeyboardInterrupt:
             break
