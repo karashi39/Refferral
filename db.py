@@ -109,7 +109,7 @@ def insert_into_m_qiita_users(qiita_user_profile):
     sql += ', 0'
     sql += ');'
 
-    exe_insert(sql)
+    exe_dml(sql)
 
 
 def select_all_m_qiita_users():
@@ -149,6 +149,14 @@ def select_all_m_qiita_users():
     return dict_results
 
 
+def logical_delete_m_qiita_users(qiita_id):
+    """delete an user logically from m_qiita_users."""
+    sql = 'UPDATE m_qiita_users'
+    sql += ' SET delete_flg = 1'
+    sql += ' WHERE qiita_id = "' + qiita_id + '"'
+    exe_dml(sql)
+
+
 def exe_select_fetch_all(sql):
     """execute SELECT statement and return results of fetch all."""
     print sql
@@ -175,8 +183,8 @@ def exe_ddl(sql):
     conn.close
 
 
-def exe_insert(sql):
-    """execute INSERT statement and commit."""
+def exe_dml(sql):
+    """execute INSERT/UPDATE/DELETE statement and commit."""
     print sql
 
     conn = mysql.connector.connect(user=USER, password=PASSWORD, host=HOST, database=DATABASE)
@@ -184,7 +192,6 @@ def exe_insert(sql):
     cur.execute(sql)
     conn.commit()
     conn.close
-
 
 if __name__ == '__main__':
     main()
