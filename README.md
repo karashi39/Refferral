@@ -8,7 +8,7 @@ As of now, use it on Qiita only.
 1. prepare Python 2.x.
 1. prepare library for python with a good feeling.
 1. prepare MySQL.
-1. rewrite connection setting for MySQL on db.py
+1. rewrite connection setting for MySQL on setting.py
 1. run db.py for initialize Database  
 `$ python db.py`
 
