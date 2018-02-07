@@ -59,4 +59,4 @@ def update_html():
 
 if __name__ == '__main__':
     mode = sys.argv[1]
-    main()
+    main(mode)
