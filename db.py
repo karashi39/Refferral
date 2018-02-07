@@ -10,11 +10,12 @@ import re
 
 import mysql.connector
 
+import setting
 
-HOST = ''
-DATABASE = ''
-USER = ''
-PASSWORD = ''
+HOST = setting.HOST
+DATABASE = setting.DATABASE
+USER = setting.USER
+PASSWORD = setting.PASSWORD
 
 
 def main():
