@@ -20,6 +20,8 @@ def main(mode="add"):
     """switch functions by the command line option."""
     if mode == "add":
         add_users()
+    elif mode == "search":
+        search_article_authors()
     elif mode == "del":
         delete_users()
     update_html()
@@ -31,6 +33,22 @@ def add_users():
         try:
             tag = raw_input()
             user_list = scraping.get_user_list_from_tag(tag)
+            for user in user_list:
+                try:
+                    db.insert_into_m_qiita_users(user)
+                except db.mysql.connector.errors.IntegrityError as error:
+                    # when the user registered already.
+                    print error
+        except KeyboardInterrupt:
+            break
+
+
+def search_article_authors():
+    """search user by searching articles."""
+    while True:
+        try:
+            word = raw_input()
+            user_list = scraping.get_user_list_by_serching_article(word)
             for user in user_list:
                 try:
                     db.insert_into_m_qiita_users(user)

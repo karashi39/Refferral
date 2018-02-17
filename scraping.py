@@ -10,6 +10,13 @@ import urllib2
 
 from bs4 import BeautifulSoup
 
+import requests
+
+import setting
+
+QIITA_ID = setting.QIITA_ID
+QIITA_PASS = setting.QIITA_PASS
+
 
 def main():
     """main function only called when script executed."""
@@ -19,6 +26,35 @@ def main():
             print get_user_list_from_tag(tag)
         except Exception:
             exit()
+
+
+def get_user_list_by_serching_article(word):
+    """search user ids by search articles."""
+    payload = {
+        'utf8': '✓',
+        'identity': QIITA_ID,
+        'password': QIITA_PASS
+    }
+
+    s = requests.Session()
+    r = s.get('https://qiita.com')
+    soup = BeautifulSoup(r.text, 'html.parser')
+    csrf_token = soup.find(attrs={'name': 'csrf-token'}).get('value')
+    payload['csrf-token'] = csrf_token
+
+    url = 'https://qiita.com/search?q=' + urllib2.quote(word)
+    html = s.get(url, data=payload).text
+    soup = BeautifulSoup(html, 'html.parser')
+    search_result_class = 'searchResult_header'
+    search_results = soup.find_all('div', class_=search_result_class)
+    user_id_list = map(lambda x: x.find('a').get('href').lstrip('/'), search_results)
+    user_list = []
+    for user_id in user_id_list:
+        user_detail = {'qiita_id': user_id}
+        user_detail.update(get_user_profile(user_id))
+        user_list.append(user_detail)
+
+    return user_list
 
 
 def get_user_list_from_tag(tag):
@@ -55,6 +91,10 @@ def get_user_profile(user_id):
         # when error occurr with this attribute, profile page is old format.
         print(error)
         raise
+
+    image_class = 'newUserPageProfile_avatar'
+    user_image = soup.find('div', class_=image_class).find('img').get('src')
+    user_profile.update({'qiita_image_url': user_image})
 
     site_url = ''
     address = ''
