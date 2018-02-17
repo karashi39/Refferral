@@ -6,9 +6,9 @@ setting.py provides setting variable.
 import variables.
 """
 
-
-# setting for MySQL.
 HOST = ''
 DATABASE = ''
 USER = ''
 PASSWORD = ''
+QIITA_ID = ''
+QIITA_PASS = ''
