@@ -25,9 +25,10 @@ def update_page(user_list):
     html += '  <link rel="stylesheet" href="referral.css">'
     html += '  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">'
     html += '  </script>'
-    html += '  <script>function hidev(qiita_id){$(qiita_id).hide()}</script>'
+    html += '  <script>function hidev(qiita_id){$(qiita_id).hide(); $(".bye_area").append(qiita_id.replace("#div", "")+"<br>");}</script>'
     html += '</head>'
     html += '<body>'
+    html += '<div class="bye_area"></div>'
     html += '<div class="user_area">'
     html += '<div class="pure-g">'
 
